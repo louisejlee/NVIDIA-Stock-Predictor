@@ -8,6 +8,12 @@ path = kagglehub.dataset_download("haiderrasoolqadri/nvidia-corporation-nvda-sto
 print("Path to dataset files:", path)
 
 dataframe = pd.read_csv(path + "/nvidia_stock_2015_to_2024.csv")
-#print(dataframe.head())
-#checking for null data
-print(dataframe.isnull().sum())
+#drop unnamed column
+dataframe.drop(columns = ['Unnamed: 0'], inplace = True)
+#convert date to datetime for time series analysis
+dataframe['date']= pd.to_datetime(dataframe['date'])
+#set date as index column
+dataframe.set_index('date', inplace = True)
+
+print(dataframe.head())
+print(dataframe.info())
