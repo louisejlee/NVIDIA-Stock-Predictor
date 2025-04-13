@@ -15,7 +15,19 @@ dataframe['date']= pd.to_datetime(dataframe['date'])
 #set date as index column
 dataframe.set_index('date', inplace = True)
 
-#check for duplicate data
+#check for duplicate data -> no duplicate data
+#print(dataframe.duplicated().sum())
 
-print(dataframe.duplicated().sum())
+# DATA VISUALIZATION -------------
+# plot stock closing prices
+
+plt.figure(figsize=(12, 6))
+plt.plot(dataframe['close'], label = 'Closing Price (USD)')
+plt.title('NVDA Stock Closing Price')
+plt.xlabel('Date')
+plt.ylabel('Closing Price (USD)')
+plt.legend()
+plt.show()
+
+
 
