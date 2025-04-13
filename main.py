@@ -15,5 +15,7 @@ dataframe['date']= pd.to_datetime(dataframe['date'])
 #set date as index column
 dataframe.set_index('date', inplace = True)
 
-print(dataframe.head())
-print(dataframe.info())
+#check for duplicate data
+
+print(dataframe.duplicated().sum())
+
