@@ -17,6 +17,6 @@ Tools & Libraries:
 
 - Pandas
 
-- Matplotlib & Seaborn for visualization
+- Matplotlib for visualization
 
-- scikit-learn for machine learning models
+- ARIMA model
