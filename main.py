@@ -14,7 +14,14 @@ dataframe.drop(columns = ['Unnamed: 0'], inplace = True)
 #convert date to datetime for time series analysis
 dataframe['date']= pd.to_datetime(dataframe['date'])
 #set date as index column
+
 dataframe.set_index('date', inplace = True)
+dataframe = dataframe.asfreq('B')
+
+# remove NaN values
+close_prices = dataframe['close'].copy()
+close_prices = close_prices.replace([np.inf, -np.inf], np.nan)
+close_prices = close_prices.dropna()
 
 #check for duplicate data -> no duplicate data
 #print(dataframe.duplicated().sum())
@@ -32,7 +39,7 @@ plt.legend()
 
 # check for stationary using Augmented Dickey-Fuller test
 from statsmodels.tsa.stattools import adfuller
-result = adfuller(dataframe['close'])
+result = adfuller(close_prices)
 print("ADF statistic: ", result[0])
 print("p-value: ", result[1])
 # reject null hypothesis if p<0.05, meaning data is stationary
@@ -73,14 +80,26 @@ plot_pacf(df_diff, lags=40, ax=plt.gca()) #ax ensure plots are in correct space
 plt.title("PACF Plot")
 
 plt.tight_layout() # ensures no overlaps between plots
-plt.show()
+#plt.show()
 
 # from the plots, we can see that p=1 and q=0
+# this is too simplistic, we will use auto arima instead
+from pmdarima import auto_arima
+stepwise_model = auto_arima(close_prices, 
+                            start_p=1, start_q=1,
+                            max_p=5, max_q=5,
+                            seasonal=False,
+                            d=1, trace=True,
+                            error_action='ignore',  
+                            suppress_warnings=True,
+                            stepwise=True)
+
+print(stepwise_model.summary())
 
 # fit model using found p and q values
-model = ARIMA(dataframe['close'], order=(1, 1, 0))
-model_fit = model.fit()
-print(model_fit.summary())
+#model = ARIMA(dataframe['close'], order=(1, 1, 0))
+#model_fit = model.fit()
+#print(model_fit.summary())
 
 
 
