@@ -11,8 +11,11 @@ print("Path to dataset files:", path)
 dataframe = pd.read_csv(path + "/nvidia_stock_2015_to_2024.csv")
 #drop unnamed column
 dataframe.drop(columns = ['Unnamed: 0'], inplace = True)
+
 #convert date to datetime for time series analysis
 dataframe['date']= pd.to_datetime(dataframe['date'])
+
+
 #set date as index column
 dataframe.set_index('date', inplace = True)
 
@@ -82,6 +85,9 @@ model = ARIMA(dataframe['close'], order=(1, 1, 0))
 model_fit = model.fit()
 print(model_fit.summary())
 
+# FORECASTING --------------------------
+
+n_steps = 50 # number of days to forecast
 
 
 
