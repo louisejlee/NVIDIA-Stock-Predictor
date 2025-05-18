@@ -36,6 +36,8 @@ result = adfuller(dataframe['close'])
 print("ADF statistic: ", result[0])
 print("p-value: ", result[1])
 # reject null hypothesis if p<0.05, meaning data is stationary
+
+# result
 # adf stat = 5.114
 # p-value = 1.0
 
@@ -50,7 +52,35 @@ print("p-value: ", result2[1])
 # p-value = 2.207e-09
 
 # data is now stationary!
+# import ARIMA model
+from statsmodels.tsa.arima.model import ARIMA
 
+# use ACF and PACF plots to find p and q variables
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+plt.figure(figsize=(12, 5))
+
+# ACF on differenced data (Autocorrelation Function)
+# used to find q value (AutoRegressive AR(q))
+plt.subplot(1, 2, 1) # to show plots for ACF and PACF side by side
+plot_acf(df_diff, lags=40, ax=plt.gca())
+plt.title("ACF Plot")
+
+
+# PACF on differenced data (Partial Autocorrelation Function)
+# used to find p value (Moving Average MA(p))
+plt.subplot(1, 2, 2)
+plot_pacf(df_diff, lags=40, ax=plt.gca()) #ax ensure plots are in correct space
+plt.title("PACF Plot")
+
+plt.tight_layout() # ensures no overlaps between plots
+plt.show()
+
+# from the plots, we can see that p=1 and q=0
+
+# fit model using found p and q values
+model = ARIMA(dataframe['close'], order=(1, 1, 0))
+model_fit = model.fit()
+print(model_fit.summary())
 
 
 
