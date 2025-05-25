@@ -2,7 +2,7 @@ import kagglehub
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
+
 
 path = kagglehub.dataset_download("haiderrasoolqadri/nvidia-corporation-nvda-stock-2015-2024")
 
@@ -15,12 +15,82 @@ dataframe.drop(columns = ['Unnamed: 0'], inplace = True)
 #convert date to datetime for time series analysis
 dataframe['date']= pd.to_datetime(dataframe['date'])
 
-
 #set date as index column
 dataframe.set_index('date', inplace = True)
+dataframe = dataframe.asfreq('B')
 
 #check for duplicate data -> no duplicate data
 #print(dataframe.duplicated().sum())
+
+# check for NaN data
+close_prices = dataframe['close'].copy()
+close_prices = close_prices.replace([np.inf, -np.inf], np.nan)
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Download dataset
+path = kagglehub.dataset_download("haiderrasoolqadri/nvidia-corporation-nvda-stock-2015-2024")
+print("Path to dataset files:", path)
+
+# Load dataset
+dataframe = pd.read_csv(path + "/nvidia_stock_2015_to_2024.csv")
+
+# Preprocess dataset
+dataframe.drop(columns=['Unnamed: 0'], inplace=True)
+dataframe['date'] = pd.to_datetime(dataframe['date'])
+dataframe.set_index('date', inplace=True)
+dataframe = dataframe.asfreq('B')
+
+# Check for duplicate data
+if dataframe.duplicated().sum() > 0:
+    print("Duplicate data found. Removing duplicates...")
+    dataframe.drop_duplicates(inplace=True)
+
+# Check for NaN data
+close_prices = dataframe['close'].copy()
+close_prices = close_prices.replace([np.inf, -np.inf], np.nan)
+close_prices = close_prices.dropna()
+
+# Data visualization
+plt.figure(figsize=(12, 6))
+plt.plot(dataframe['close'], label='Closing Price (USD)')
+plt.title('NVDA Stock Closing Price')
+plt.xlabel('Date')
+plt.ylabel('Closing Price (USD)')
+plt.legend()
+
+# Stationarity test
+from statsmodels.tsa.stattools import adfuller
+result = adfuller(close_prices)
+print("ADF statistic: ", result[0])
+print("p-value: ", result[1])
+
+# Differencing to make data stationary
+df_diff = dataframe['close'].diff().dropna()
+
+# Rerun stationarity test
+result2 = adfuller(df_diff)
+print("ADF statistic: ", result2[0])
+print("p-value: ", result2[1])
+
+# Use auto ARIMA to find p and q values
+from pmdarima import auto_arima
+stepwise_model = auto_arima(close_prices,  
+                            start_p=1, start_q=1,
+                            max_p=5, max_q=5,
+                            seasonal=False,
+                            d=1, trace=True,
+                            error_action='ignore',  
+                            suppress_warnings=True,
+                            stepwise=True)
+print(stepwise_model.summary())
+
+# Forecasting
+n_steps = 50
+forecast = stepwise_model.predict(n_periods=n_steps)
+print(forecast)
+close_prices = close_prices.dropna()
 
 # DATA VISUALIZATION -------------
 # plot stock closing prices
@@ -35,7 +105,7 @@ plt.legend()
 
 # check for stationary using Augmented Dickey-Fuller test
 from statsmodels.tsa.stattools import adfuller
-result = adfuller(dataframe['close'])
+result = adfuller(close_prices)
 print("ADF statistic: ", result[0])
 print("p-value: ", result[1])
 # reject null hypothesis if p<0.05, meaning data is stationary
@@ -76,18 +146,32 @@ plot_pacf(df_diff, lags=40, ax=plt.gca()) #ax ensure plots are in correct space
 plt.title("PACF Plot")
 
 plt.tight_layout() # ensures no overlaps between plots
-plt.show()
+#plt.show()
 
 # from the plots, we can see that p=1 and q=0
+# too simplistic, lets use auto arima instead to find p and q
+from pmdarima.arima import auto_arima
+stepwise_model = auto_arima(close_prices,  
+                            start_p=1, start_q=1,
+                            max_p=5, max_q=5,
+                            seasonal=False,
+                            d=1, trace=True,
+                            error_action='ignore',  
+                            suppress_warnings=True,
+                            stepwise=True)
+print(stepwise_model.summary())
+
 
 # fit model using found p and q values
-model = ARIMA(dataframe['close'], order=(1, 1, 0))
-model_fit = model.fit()
-print(model_fit.summary())
+#model = ARIMA(dataframe['close'], order=(1, 1, 0))
+#model_fit = model.fit()
+#print(model_fit.summary())
 
 # FORECASTING --------------------------
 
-n_steps = 50 # number of days to forecast
+#n_steps = 50 # number of days to forecast
+#forecast = model_fit.forecast(steps = n_steps)
+#print(forecast)
 
 
 
