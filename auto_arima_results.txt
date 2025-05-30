@@ -1,0 +1,33 @@
+Series: close_ts
+ARIMA(2,2,3)
+
+Coefficients:
+ar1     ar2      ma1      ma2     ma3
+-0.2626  0.2645  -0.7309  -0.6214  0.3629
+s.e.   0.1474  0.1277   0.1422   0.1239  0.1230
+
+sigma^2 = 0.5451:  log likelihood = -2639.91
+AIC=5291.81   AICc=5291.85   BIC=5326.43
+
+Training set error measures:
+ME      RMSE       MAE        MPE     MAPE       MASE
+Training set 0.01787405 0.7371896 0.3283202 0.05006889 2.124719 0.03739707
+ACF1
+Training set 0.000608174
+Series: close_ts 
+ARIMA(2,2,3) 
+
+Coefficients:
+          ar1     ar2      ma1      ma2     ma3
+      -0.2626  0.2645  -0.7309  -0.6214  0.3629
+s.e.   0.1474  0.1277   0.1422   0.1239  0.1230
+
+sigma^2 = 0.5451:  log likelihood = -2639.91
+AIC=5291.81   AICc=5291.85   BIC=5326.43
+
+Training set error measures:
+                     ME      RMSE       MAE        MPE     MAPE       MASE
+Training set 0.01787405 0.7371896 0.3283202 0.05006889 2.124719 0.03739707
+                    ACF1
+Training set 0.000608174
+> 

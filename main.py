@@ -151,17 +151,21 @@ plt.tight_layout() # ensures no overlaps between plots
 # from the plots, we can see that p=1 and q=0
 
 # fit model using found p and q values
-#model = ARIMA(dataframe['close'], order=(1, 1, 0))
-#model_fit = model.fit()
-#print(model_fit.summary())
+# model was not optimal, thus we will use R to find values with auto_arima
+
+# send close_prices to a csv file so R can read
+# close_prices.to_csv("close_prices.csv")
+
+
+# fit model using found p and q values
+model = ARIMA(dataframe['close'], order=(2, 2, 3)) # using p=2 d=2 and q=3 from auto_arima
+model_fit = model.fit()
+print(model_fit.summary())
 
 # FORECASTING --------------------------
 
-#n_steps = 50 # number of days to forecast
-#forecast = model_fit.forecast(steps = n_steps)
-#print(forecast)
-
-
-
+n_steps = 30 # number of days to forecast
+forecast = model_fit.forecast(steps = n_steps)
+print(forecast)
 
 
