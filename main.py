@@ -28,7 +28,7 @@ close_prices = close_prices.dropna()
 
 # DATA VISUALIZATION -------------
 # plot stock closing prices
-
+"""
 plt.figure(figsize=(12, 6))
 plt.plot(dataframe['close'], label = 'Closing Price (USD)')
 plt.title('NVDA Stock Closing Price')
@@ -36,7 +36,7 @@ plt.xlabel('Date')
 plt.ylabel('Closing Price (USD)')
 plt.legend()
 #plt.show()
-
+"""
 # check for stationary using Augmented Dickey-Fuller test
 from statsmodels.tsa.stattools import adfuller
 result = adfuller(close_prices)
@@ -104,5 +104,33 @@ print(model_fit.summary())
 n_steps = 30 # number of days to forecast
 forecast = model_fit.forecast(steps = n_steps)
 forecast_result = forecast
-forecast_result.to_csv("forecast_result.csv")
+
+# forecast_result.to_csv("forecast_result.csv")
+
+
+
+
+# plot forecast for visualizations
+from datetime import timedelta
+
+# Create the forecast DataFrame
+forecast_df = forecast.to_frame(name="Forecast")
+
+# Set real dates as index
+close_prices.index = pd.to_datetime(close_prices.index)
+
+last_date = close_prices.index[-1]  # must be a datetime index
+forecast_df.index = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=30, freq='B')  # 'B' = business days
+
+
+plt.figure(figsize=(10, 5))
+plt.plot(close_prices[-60:], label='Actual')  # last 60 days of actuals
+plt.plot(forecast_df, label='Forecast', linestyle='--')
+plt.title("NVDA 30-Day Forecast")
+plt.xlabel("Date")
+plt.ylabel("Predicted Closing Price (USD)")
+plt.legend()
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig("nvda_forecast_plot.pdf")
 
