@@ -1,10 +1,12 @@
 # NVIDIA-Stock-Predictor
 
-## Description:
-(WIP, still developping and improving as skills and knowledge dwevelops)
+### Description:
+(WIP, still developping and improving as skills and knowledge develops)
 
 
-### 📊 Project Summary: NVDA Stock Price Forecasting (ARIMA Model)
+
+
+## 📊 Project Summary: NVDA Stock Price Forecasting (ARIMA Model)
 
 
 ### 🎯 Objective
