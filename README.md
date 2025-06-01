@@ -5,6 +5,8 @@
 
 
 📊 Project Summary: NVDA Stock Price Forecasting (ARIMA Model)
+
+
 🎯 Objective
 To forecast NVIDIA's (NVDA) stock closing prices using historical data and time series modeling, helping visualize short-term market trends.
 
@@ -16,6 +18,7 @@ R: forecast = auto.arima() for model selection
 Data Source: Kaggle dataset (2015–2024 NVDA stock data)
 
 🔄 Process Overview
+
 1. Data Preparation
 Loaded and cleaned NVDA stock data
 
@@ -53,12 +56,14 @@ Generated:
 Static plots (matplotlib/PDF)
 
 📈 Forecast Results (Sample)
+
 Date	Forecasted Price
 2024-06-25	110.16
 ...	...
 2024-08-06	123.37
 
 💡 Key Learnings
+
 How to clean and format stock data for time series analysis
 
 Interpreting ADF test, ACF/PACF plots
@@ -68,6 +73,7 @@ Leveraging R + Python together for model selection and implementation
 Creating professional-grade visual and forecasts
 
 📁 Deliverables
+
 main.py: Full Python script for ARIMA forecasting
 
 data_analysis.R: R script for auto.arima model selection
