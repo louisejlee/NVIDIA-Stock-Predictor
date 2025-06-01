@@ -1,22 +1,79 @@
-# NVIDIA-Stock-Predictor
-This project aims to develop a predictive model for forecasting NVDA (NVIDIA Corporation) stock prices using historical stock data. The dataset, which spans from 2015 to 2024, includes various features such as opening and closing prices, trading volume, and more. The project leverages Python, Pandas, and machine learning models to analyze the data and make predictions about future stock price movements.
+## NVIDIA-Stock-Predictor
 
-Key elements:
+# Description:
+📊 Project Summary: NVDA Stock Price Forecasting (ARIMA Model)
+🎯 Objective
+To forecast NVIDIA's (NVDA) stock closing prices using historical data and time series modeling, helping visualize short-term market trends.
 
-- Data cleaning and exploration
+🧰 Tools & Technologies
+Python: pandas, matplotlib, statsmodels, plotly
 
-- Feature engineering (e.g., moving averages, daily returns)
+R: forecast::auto.arima() for model selection
 
-- Building a predictive model using regression and machine learning techniques
+Data Source: Kaggle dataset (2015–2024 NVDA stock data)
 
-- Visualizations to analyze trends and patterns in the stock data
+🔄 Process Overview
+1. Data Preparation
+Loaded and cleaned NVDA stock data
 
-Tools & Libraries:
+Converted date column to datetime and set as index
 
-- Python
+Ensured consistent daily frequency (Business Day)
 
-- Pandas
+Removed any NaN or infinite values
 
-- Matplotlib for visualization
+2. Stationarity Check
+Performed Augmented Dickey-Fuller (ADF) test
 
-- ARIMA model
+Applied differencing to achieve stationarity (d=2)
+
+3. Model Selection
+Used R’s auto.arima() to identify optimal ARIMA model:
+ARIMA(2,2,3)
+
+AR(2): Uses 2 past values
+
+I(2): Differenced twice for stationarity
+
+MA(3): Uses 3 past error terms
+
+4. Model Fitting in Python
+Fitted ARIMA(2,2,3) using statsmodels in Python
+
+Forecasted next 30 business days of closing prices
+
+5. Forecast Output
+Exported forecast results to .csv
+
+Generated:
+
+Static plots (matplotlib/PDF)
+
+Interactive plots (Plotly/HTML) with hoverable data points
+
+📈 Forecast Results (Sample)
+Date	Forecasted Price
+2024-06-25	110.16
+...	...
+2024-08-06	123.37
+
+💡 Key Learnings
+How to clean and format stock data for time series analysis
+
+Interpreting ADF test, ACF/PACF plots
+
+Leveraging R + Python together for model selection and implementation
+
+Creating professional-grade visual and interactive forecasts
+
+📁 Deliverables
+main.py: Full Python script for ARIMA forecasting
+
+data_analysis.R: R script for auto.arima model selection
+
+nvda_forecast.csv: Forecasted price output
+
+nvda_forecast_plot.pdf: Static visual plot
+
+nvda_forecast_interactive.html: Interactive Plotly chart
+
