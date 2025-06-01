@@ -100,6 +100,7 @@ plt.tight_layout() # ensures no overlaps between plots
 # fit model using found p and q values from R file
 
 from statsmodels.tsa.arima.model import ARIMA
+close_prices = close_prices.asfreq('B')
 
 model = ARIMA(dataframe['close'], order=(2, 2, 3)) # using p=2 d=2 and q=3 from auto_arima
 model_fit = model.fit()
