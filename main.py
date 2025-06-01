@@ -63,7 +63,12 @@ print("p-value: ", result2[1])
 # from statsmodels.tsa.arima.model import ARIMA
 
 # use ACF and PACF plots to find p and q variables
-""" from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+""" 
+Attempted to find p, d, q values using ACF and PACF plots but ended up with values that
+did not forecast the best results, thus commented out and new method was found.
+
+
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 plt.figure(figsize=(12, 5))
 
 # ACF on differenced data (Autocorrelation Function)
@@ -92,7 +97,8 @@ plt.tight_layout() # ensures no overlaps between plots
 # close_prices.to_csv("close_prices.csv")
 
 
-# fit model using found p and q values
+# fit model using found p and q values from R file
+
 from statsmodels.tsa.arima.model import ARIMA
 
 model = ARIMA(dataframe['close'], order=(2, 2, 3)) # using p=2 d=2 and q=3 from auto_arima
@@ -106,8 +112,6 @@ forecast = model_fit.forecast(steps = n_steps)
 forecast_result = forecast
 
 # forecast_result.to_csv("forecast_result.csv")
-
-
 
 
 # plot forecast for visualizations

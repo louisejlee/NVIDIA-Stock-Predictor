@@ -8,7 +8,7 @@ To forecast NVIDIA's (NVDA) stock closing prices using historical data and time 
 🧰 Tools & Technologies
 Python: pandas, matplotlib, statsmodels, plotly
 
-R: forecast::auto.arima() for model selection
+R: forecast = auto.arima() for model selection
 
 Data Source: Kaggle dataset (2015–2024 NVDA stock data)
 
@@ -49,8 +49,6 @@ Generated:
 
 Static plots (matplotlib/PDF)
 
-Interactive plots (Plotly/HTML) with hoverable data points
-
 📈 Forecast Results (Sample)
 Date	Forecasted Price
 2024-06-25	110.16
@@ -64,7 +62,7 @@ Interpreting ADF test, ACF/PACF plots
 
 Leveraging R + Python together for model selection and implementation
 
-Creating professional-grade visual and interactive forecasts
+Creating professional-grade visual and forecasts
 
 📁 Deliverables
 main.py: Full Python script for ARIMA forecasting
@@ -75,5 +73,4 @@ nvda_forecast.csv: Forecasted price output
 
 nvda_forecast_plot.pdf: Static visual plot
 
-nvda_forecast_interactive.html: Interactive Plotly chart
 
