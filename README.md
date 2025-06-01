@@ -2,6 +2,8 @@
 
 # Description:
 (WIP, still developping and improving as skills and knowledge dwevelops)
+
+
 📊 Project Summary: NVDA Stock Price Forecasting (ARIMA Model)
 🎯 Objective
 To forecast NVIDIA's (NVDA) stock closing prices using historical data and time series modeling, helping visualize short-term market trends.
