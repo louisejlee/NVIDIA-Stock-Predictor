@@ -1,7 +1,7 @@
 # NVIDIA-Stock-Predictor
 
 ### Description:
-(WIP, still developping and improving as skills and knowledge develops)
+(Work in progress, still developping and improving as skills and knowledge develops)
 
 
 
